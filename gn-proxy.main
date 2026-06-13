@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gn proxy</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .topbar {
+      height: 50px;
+      display: flex;
+      gap: 6px;
+      padding: 6px;
+      background: #111827;
+      box-sizing: border-box;
+    }
+
+    .topbar input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .topbar button {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      background: #fc2651;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .topbar button:hover {
+      opacity: 0.9;
+    }
+
+    iframe {
+      width: 100%;
+      height: calc(100% - 50px);
+      border: 0;
+      display: block
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <input id="urlInput" type="text" placeholder="Enter URL (example.com)" />
+    <button onclick="loadUrl()">Load</button>
+    <button onclick="clearUrl()">Clear</button>
+  </div>
+
+  <iframe id="viewer" src="about:blank"></iframe>
+
+  <script>
+    function loadUrl() {
+      var input = document.getElementById("urlInput").value.trim();
+      if (!input) return;
+
+      if (input.indexOf("http://") !== 0 && input.indexOf("https://") !== 0) {
+        input = "https://" + input;
+      }
+
+      document.getElementById("viewer").src = input;
+    }
+
+    function clearUrl() {
+      document.getElementById("urlInput").value = "";
+      document.getElementById("viewer").src = "about:blank";
+    }
+
+    document.getElementById("urlInput").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") loadUrl();
+    });
+  </script>
+</body>
+</html>
